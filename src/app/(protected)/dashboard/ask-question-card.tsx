@@ -94,7 +94,7 @@ const AskQuestionCard = () => {
           </DialogHeader>
           <MDEditor.Markdown
             source={answer}
-            className="!h-full max-h-[40vh] max-w-[80vw] p-3 rounded overflow-scroll"
+            className="!h-full max-h-[40vh] max-w-[80vw] sm:max-w-[76vw] p-3 rounded overflow-scroll"
           />
           <CodeReferences filesReferences={filesReferences} />
           <Button

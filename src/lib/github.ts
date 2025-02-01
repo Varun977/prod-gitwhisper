@@ -44,21 +44,26 @@ export const getCommitHashes = async (
 export const pollCommits = async (projectId: string) => {
   const { project, githubUrl } = await fetchProjectGithubUrl(projectId);
   const commitHashes = await getCommitHashes(githubUrl);
+  console.log("Commit Hashes:",commitHashes);
   const unprocessedCommits = await fitlerUnprocessedCommits(
     projectId,
     commitHashes,
   );
+  console.log("Unprocessed: ", commitHashes);
   const summaryResponses = await Promise.allSettled(
     unprocessedCommits.map(async (commit) => {
       return summarizeCommit(githubUrl, commit.commitHash);
     }),
   );
+  console.log("summaryResponses: ", summaryResponses);
   const summaries = summaryResponses.map((response, index) => {
     if (response.status === "fulfilled") {
       return response.value as string;
     }
     return "";
   });
+
+  console.log("Summaries: ", summaries);
 
   const commits = await db.commit.createMany({
     data: summaries.map((summary, index) => {
@@ -74,6 +79,7 @@ export const pollCommits = async (projectId: string) => {
       };
     }),
   });
+  console.log(commits);
   return commits;
 };
 

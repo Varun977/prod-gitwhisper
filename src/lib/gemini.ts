@@ -7,6 +7,7 @@ const model = genAI.getGenerativeModel({
 });
 
 export const aiSummarizeCommit = async (diff: string) => {
+  // console.log("Summarizing commit diff");
   const response = await model.generateContent([
     `You are an expert programmer, and you are trying to summarize a git diff.
 Reminders about the git diff format:
@@ -42,6 +43,8 @@ Do not include parts of the example in your summary.
 It is given only as an example of appropriate comments.`,
     `Please summarise the following diff file: \n\n${diff}.`,
   ]);
+
+  // console.log("AI Response: ", response);
 
   return response.response.text();
 };

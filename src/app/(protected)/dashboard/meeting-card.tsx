@@ -88,15 +88,41 @@ const MeetingCard = () => {
             Create a new meeting
           </h3>
           <p className="mt-1 text-center text-sm text-gray-500">
-            Analyse your meeting with GitWhisper.
+            Analyse your meeting with GitWhisper
             <br />
-            Powered by AI.
+            Powered by AI
           </p>
           <div className="mt-6">
-            <Button disabled={isUploading}>
-              <Upload className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+            <Button disabled={isUploading} onClick={() => {
+              const prompt = window.prompt("Enter the meeting URL");
+              if (prompt) {
+                uploadMeeting.mutate(
+                  {
+                    projectId: project?.id!,
+                    meetingUrl: prompt,
+                    name: "meeting.mp3",
+                  },
+                  {
+                    onSuccess: (meeting) => {
+                      toast.success("Meeting uploaded successfully");
+                      router.push("/meetings");
+                      processMeeting.mutateAsync({
+                        meetingUrl: prompt,
+                        meetingId: meeting.id,
+                        projectId: project?.id!,
+                      });
+                    },
+                    onError: (error) => {
+                      toast.error("Failed to upload meeting");
+                      console.error(error);
+                    },
+                  },
+                );
+              }
+            }}>
+              {/* <Upload className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" /> */}
               Upload Meeting
-              <input className="hidden" {...getInputProps()} />
+              {/* <input className="hidden" {...getInputProps()} /> */}
             </Button>
           </div>
         </>

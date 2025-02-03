@@ -44,18 +44,19 @@ export const getCommitHashes = async (
 export const pollCommits = async (projectId: string) => {
   const { project, githubUrl } = await fetchProjectGithubUrl(projectId);
   const commitHashes = await getCommitHashes(githubUrl);
-  console.log("Commit Hashes:",commitHashes);
-  const unprocessedCommits = await fitlerUnprocessedCommits(
+  // console.log("Commit Hashes:",commitHashes);
+  const unprocessedCommits = await filterUnprocessedCommits(
     projectId,
     commitHashes,
   );
-  console.log("Unprocessed: ", commitHashes);
+  // console.log("Unprocessed: ", commitHashes);
+  // console.log("Unprocessed Commits: ", unprocessedCommits);
   const summaryResponses = await Promise.allSettled(
     unprocessedCommits.map(async (commit) => {
       return summarizeCommit(githubUrl, commit.commitHash);
     }),
   );
-  console.log("summaryResponses: ", summaryResponses);
+  // console.log("summaryResponses: ", summaryResponses);
   const summaries = summaryResponses.map((response, index) => {
     if (response.status === "fulfilled") {
       return response.value as string;
@@ -63,11 +64,11 @@ export const pollCommits = async (projectId: string) => {
     return "";
   });
 
-  console.log("Summaries: ", summaries);
+  // console.log("Summaries: ", summaries);
 
   const commits = await db.commit.createMany({
     data: summaries.map((summary, index) => {
-      console.log(`Processing commit ${index}`);
+      // console.log(`Processing commit ${index}`);
       return {
         projectID: projectId,
         commitHash: unprocessedCommits[index]!.commitHash,
@@ -79,7 +80,7 @@ export const pollCommits = async (projectId: string) => {
       };
     }),
   });
-  console.log(commits);
+  // console.log(commits);
   return commits;
 };
 
@@ -89,6 +90,7 @@ async function summarizeCommit(githubUrl: string, commitHash: string) {
       Accept: "application/vnd.github.v3.diff",
     },
   });
+  // console.log("Summarizing Commits...")
   return (await aiSummarizeCommit(data)) || "";
 }
 
@@ -107,20 +109,23 @@ async function fetchProjectGithubUrl(projectId: string) {
   return { project, githubUrl: project?.githubURL };
 }
 
-async function fitlerUnprocessedCommits(
+async function filterUnprocessedCommits(
   projectId: string,
   commitHashes: Response[],
 ) {
+  // console.log("Called filterUnprocessedCommits");
   const processedCommits = await db.commit.findMany({
     where: {
       projectID: projectId,
     },
   });
+  // console.log("Processed Commits: ", processedCommits);
   const unprocessedCommits = commitHashes.filter(
     (commit) =>
       !processedCommits.some(
         (processedCommit) => processedCommit.commitHash === commit.commitHash,
       ),
   );
+  // console.log("Unprocessed Commits from func: ", unprocessedCommits);
   return unprocessedCommits;
 }

@@ -13,7 +13,7 @@ function msToTime(ms: number) {
 
 export const processMeeting = async (meetingUrl: string) => {
   const transcript = await client.transcripts.transcribe({
-    audio_url: "https://assembly.ai/sports_injuries.mp3",
+    audio_url: meetingUrl,
     auto_chapters: true,
   });
   console.log("Processing the Meeting!: ", meetingUrl);
@@ -37,6 +37,6 @@ export const processMeeting = async (meetingUrl: string) => {
   };
 };
 
-const audioUrl = "https://assembly.ai/sports_injuries.mp3";
-const response = await processMeeting(audioUrl);
-console.log(response);
+// const audioUrl = "https://assembly.ai/sports_injuries.mp3";
+// const response = await processMeeting(audioUrl);
+// console.log(response);

@@ -44,6 +44,7 @@ model Project {
 
     savedQuestions Question[]
     meetings       Meeting[]
+    chatMessages   ChatMessage[]
 }
 
 model UserToProject {
@@ -136,4 +137,13 @@ model Issue {
 enum MeetingStatus {
     PROCESSING
     COMPLETED
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  content    String
+  senderType String   
+  projectId  String   
+  project    Project  @relation(fields: [projectId], references: [id])
 }

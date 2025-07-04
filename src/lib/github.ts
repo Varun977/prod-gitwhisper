@@ -25,6 +25,7 @@ export const getCommitHashes = async (
   const { data } = await octokit.rest.repos.listCommits({
     owner,
     repo,
+    per_page: 15,
   });
 
   const sortedCommits = data.sort(
@@ -32,7 +33,7 @@ export const getCommitHashes = async (
       new Date(b.commit.author.date).getTime() -
       new Date(a.commit.author.date).getTime(),
   ) as any[];
-  return sortedCommits.slice(0, 10).map((commit: any) => ({
+  return sortedCommits.slice(0, 15).map((commit: any) => ({
     commitHash: commit.sha as string,
     commitMessage: commit.commit.message ?? "",
     commitAuthorName: commit.commit?.author?.name ?? "",

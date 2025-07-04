@@ -11,7 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "@/server/db";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 /**
  * 1. CONTEXT
@@ -81,21 +81,41 @@ export const createTRPCRouter = t.router;
  * network latency that would occur in production but not in local development.
  */
 
-const isAuthenticated = t.middleware(async ({next, ctx}) => {
-  const user = await auth();
-  if(!user){
+const isAuthenticated = t.middleware(async ({ next, ctx }) => {
+  const userAuth = await auth();
+  if (!userAuth || !userAuth.userId) {
     throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'You must be logged in to access this resource',
-    })
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to access this resource",
+    });
   }
+
+  // Upsert the user in the database so they exist before linking projects
+  const clerkClientInstance = await clerkClient();
+  const clerkUserInfo = await clerkClientInstance.users.getUser(
+    userAuth.userId,
+  );
+  console.log("clerkUserInfo", clerkUserInfo);
+  console.log("userAuth", userAuth);
+  console.log("User Being Created!");
+  await ctx.db.user.upsert({
+    where: { id: userAuth.userId },
+    update: {},
+    create: {
+      id: userAuth.userId,
+      emailAddress: clerkUserInfo.emailAddresses[0]?.emailAddress ?? "",
+      firstName: clerkUserInfo.firstName,
+      lastName: clerkUserInfo.lastName,
+    },
+  });
+
   return next({
     ctx: {
       ...ctx,
-      user
-    }
-  })
-})
+      user: userAuth,
+    },
+  });
+});
 
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();

@@ -15,9 +15,8 @@ const DashboardPage = () => {
   const { project } = useProject();
 
   return (
-    <div>
+    <div className="scrollbar-hide h-screen overflow-y-auto pt-6">
       <div className="flex flex-wrap items-center justify-between gap-y-4">
-        {/* Github Link */}
         <div className="w-fit rounded-md bg-primary px-4 py-3">
           <div className="flex items-center">
             <Github className="size-5 text-white" />
@@ -52,7 +51,7 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mb-32 mt-8">
         <CommitLog />
       </div>
     </div>

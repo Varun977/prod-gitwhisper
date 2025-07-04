@@ -7,11 +7,12 @@ import React from "react";
 const TeamMembers = () => {
   const { projectId } = useProject();
   const { data: members } = api.project.getTeamMembers.useQuery({ projectId });
+
   return (
     <div className="flex items-center gap-2">
       {members?.map((member) => (
         <img
-          src={member.user.imageURL || ""}
+          src={`https://avatar.iran.liara.run/public`}
           key={member.id}
           alt={member.user.firstName || ""}
           height={30}

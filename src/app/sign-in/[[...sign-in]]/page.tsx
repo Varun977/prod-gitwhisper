@@ -7,6 +7,7 @@ export default async function Page() {
   if (userId) {
     redirect("/dashboard");
   }
+  
   return (
     <div className="flex h-screen w-screen items-center justify-center">
       <SignIn />

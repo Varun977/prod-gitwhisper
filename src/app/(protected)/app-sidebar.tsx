@@ -19,6 +19,8 @@ import {
   Bot,
   CreditCard,
   LayoutDashboard,
+  MessageSquare,
+  MessagesSquare,
   Plus,
   Presentation,
 } from "lucide-react";
@@ -41,11 +43,11 @@ const items = [
     url: "/meetings",
     icon: Presentation,
   },
-  // {
-  //     title: "Billing",
-  //     url: "/billing",
-  //     icon: CreditCard
-  // },
+  {
+    title: "Chat",
+    url: "/chat",
+    icon: MessagesSquare,
+  },
 ];
 
 export function AppSideBar() {

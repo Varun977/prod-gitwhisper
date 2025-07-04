@@ -54,7 +54,7 @@ const AskQuestionCard = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[80vw] max-h-[100vh]">
+        <DialogContent className="scrollbar-hide max-h-[80vh] max-w-full overflow-y-auto overflow-x-hidden p-6 sm:max-w-[80vw]">
           <DialogHeader>
             <div className="flex items-center gap-2">
               <DialogTitle>
@@ -94,7 +94,7 @@ const AskQuestionCard = () => {
           </DialogHeader>
           <MDEditor.Markdown
             source={answer}
-            className="!h-full max-h-[40vh] max-w-[80vw] sm:max-w-[76vw] p-3 rounded overflow-scroll"
+            className="!h-full max-h-[40vh] max-w-[80vw] overflow-scroll rounded p-3 sm:max-w-[76vw] 2xl:max-w-[77vw]"
           />
           <CodeReferences filesReferences={filesReferences} />
           <Button

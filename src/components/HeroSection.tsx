@@ -58,6 +58,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 className="gap-2 bg-gradient-to-r from-brand-600 to-brandSecondary-600 text-white transition-opacity hover:opacity-90"
+                onClick={() => (window.location.href = "/sign-in")}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
@@ -65,6 +66,7 @@ const HeroSection = () => {
                 variant="outline"
                 size="lg"
                 className="border-brand-600 text-brand-700 hover:bg-brand-50"
+                onClick={() => window.open("https://github.com/DrMyth/gitwhisper", "_blank")}
               >
                 Learn More
               </Button>

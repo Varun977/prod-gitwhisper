@@ -25,14 +25,18 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-500">
                 <NotebookText className="h-4 w-4" />
-                <a href="/blog" className="hover:underline">
+                <a
+                  href="https://github.com/DrMyth/gitwhisper"
+                  target="_blank"
+                  className="hover:underline"
+                >
                   Blog
                 </a>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-500">
                 <Linkedin className="h-4 w-4" />
                 <a
-                  href="https://linkedin.com/in/yourprofile"
+                  href="https://www.linkedin.com/in/varunmaramreddy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
@@ -46,7 +50,7 @@ const Footer = () => {
               <div className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-500">
                 <Twitter className="h-4 w-4" />
                 <a
-                  href="https://twitter.com/yourhandle"
+                  href="https://x.com/varunmaramreddy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
@@ -69,7 +73,10 @@ const Footer = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <a href="mailto:you@example.com" className="hover:underline">
+                <a
+                  href="mailto:varunmaramreddy.work@gmail.com"
+                  className="hover:underline"
+                >
                   Contact
                 </a>
               </div>

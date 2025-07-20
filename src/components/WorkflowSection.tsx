@@ -30,7 +30,10 @@ const timelineSteps = [
 ];
 
 const WorkflowTimeline = () => (
-  <section className="relative isolate z-0 flex min-h-[92vh] items-center justify-center overflow-hidden bg-gradient-to-b from-violet-50/40 via-white/70 to-blue-50/30 py-12">
+  <section
+    id="workflow"
+    className="relative isolate z-0 flex min-h-[92vh] items-center justify-center overflow-hidden bg-gradient-to-b from-violet-50/40 via-white/70 to-blue-50/30 py-12 pb-20"
+  >
     {/* Updated glow to violet/blue */}
     <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
       <div className="h-[520px] w-[520px] rounded-full bg-gradient-to-br from-violet-100/50 via-blue-100/50 to-indigo-100/50 opacity-50 blur-3xl md:h-[780px] md:w-[780px]" />
@@ -88,14 +91,14 @@ const WorkflowTimeline = () => (
       </div>
 
       {/* Updated button to match violet/blue scheme */}
-      <div className="mt-14 animate-fade-in text-center md:mt-16">
+      {/* <div className="mt-14 animate-fade-in text-center md:mt-16">
         <Button
           className="relative overflow-hidden rounded-full border-none bg-gradient-to-r from-violet-500 to-blue-500 px-11 py-6 text-lg font-semibold text-white shadow-lg shadow-violet-400/20 outline-none transition-transform duration-300 hover:scale-105 hover:shadow-violet-500/10"
           size="lg"
         >
           Get Started for Free
         </Button>
-      </div>
+      </div> */}
     </div>
   </section>
 );

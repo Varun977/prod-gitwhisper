@@ -9,6 +9,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import useProject from "@/hooks/use-project";
 import io, { Socket } from "socket.io-client";
+import dotenv from "dotenv";
+import { env } from "process";
+dotenv.config();
 
 // Message type definition for better type safety
 type MessageType = "user" | "bot";
@@ -31,36 +34,38 @@ const Chat: React.FC = () => {
   const roomId = project?.id ?? "global";
 
   useEffect(() => {
-    socket = io("http://localhost:3001");
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL!;
+    console.log(wsUrl);
+    socket = io(wsUrl); //add WS_URL from env
 
     console.log("Project:", project);
     socket.emit("join-room", roomId);
     console.log("Joined room:", roomId);
 
-    (async () => {
-      const res = await fetch(`/api/chat/${roomId}`);
-      if (res.ok) {
-        const history = (await res.json()) as Array<{
-          id: string;
-          content: string;
-          senderType: "user" | "bot";
-        }>;
-        setMessages(
-          history.map((m) => ({
-            id: m.id,
-            content: m.content,
-            type: m.senderType,
-          })),
-        );
-      }
-    })();
+    // (async () => {
+    //   const res = await fetch(`/api/chat/${roomId}`);
+    //   if (res.ok) {
+    //     const history = (await res.json()) as Array<{
+    //       id: string;
+    //       content: string;
+    //       senderType: "user" | "bot";
+    //     }>;
+    //     setMessages(
+    //       history.map((m) => ({
+    //         id: m.id,
+    //         content: m.content,
+    //         type: m.senderType,
+    //       })),
+    //     );
+    //   }
+    // })();
 
     socket.on("message", async (msg: string) => {
-      await fetch(`/api/chat/${roomId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: msg, senderType: "bot" }),
-      });
+      // await fetch(`/api/chat/${roomId}`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ content: msg, senderType: "bot" }),
+      // });
       setMessages((prev) => [
         ...prev,
         { id: `bot-${Date.now()}`, content: msg, type: "bot" },
@@ -96,11 +101,11 @@ const Chat: React.FC = () => {
 
     if (!inputMessage.trim()) return;
 
-    await fetch(`/api/chat/${roomId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: inputMessage, senderType: "user" }),
-    });
+    // await fetch(`/api/chat/${roomId}`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ content: inputMessage, senderType: "user" }),
+    // });
   };
 
   const renderChatHeader = () => (
@@ -123,7 +128,7 @@ const Chat: React.FC = () => {
         size="sm"
         className="flex items-center gap-1 rounded-full border-gray-200 text-gray-700 hover:bg-gray-50"
         onClick={async () => {
-          await fetch(`/api/chat/${roomId}`, { method: "DELETE" });
+          // await fetch(`/api/chat/${roomId}`, { method: "DELETE" });
           setMessages([]);
         }}
       >

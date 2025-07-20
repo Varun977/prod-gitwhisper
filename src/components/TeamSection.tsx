@@ -3,7 +3,7 @@ import { MessageSquare, Video, GitCommit, Users } from "lucide-react";
 
 const TeamSection = () => {
   return (
-    <section id="team" className="gradient-bg-2 py-16 md:py-24">
+    <section id="team" className="gradient-bg-2 py-20 md:py-24">
       <div className="container-custom">
         <div className="flex flex-col items-center gap-12 lg:scale-90 lg:flex-row xl:scale-90 2xl:scale-110">
           <div className="relative w-full animate-fade-in lg:w-1/2">
@@ -157,9 +157,9 @@ const TeamSection = () => {
               </div>
             </div>
 
-            <div className="animate-delay-200 ml-3 flex scale-105 animate-fade-in items-center justify-start pt-2">
+            {/* <div className="animate-delay-200 ml-3 flex scale-105 animate-fade-in items-center justify-start pt-2">
               <Button className="btn-primary">Start Collaborating</Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

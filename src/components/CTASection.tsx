@@ -19,10 +19,19 @@ const CTASection = () => {
               codebases.
             </p>
             <div className="animate-delay-200 flex animate-fade-in flex-col justify-center gap-4 sm:flex-row">
-              <Button size="lg" className="btn-primary gap-2">
+              <Button
+                size="lg"
+                className="btn-primary gap-2"
+                onClick={() => (window.location.href = "/sign-in")}
+              >
                 Get Started <ArrowRight size={16} />
               </Button>
-              <Button variant="outline" size="lg" className="btn-secondary">
+              <Button
+                variant="outline"
+                size="lg"
+                className="btn-secondary"
+                onClick={() => window.open("https://github.com/DrMyth/gitwhisper", "_blank")}
+              >
                 Request Demo
               </Button>
             </div>

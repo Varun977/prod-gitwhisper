@@ -58,15 +58,17 @@ export function AppSideBar() {
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
         <div className="flex items-center gap-2">
-          <Image
+          {/* <Image
             src="/logo.png"
             alt="logo"
             width={40}
             height={40}
             className="ml-1"
-          />
+          /> */}
           {open && (
-            <h1 className="text-xl font-bold text-primary/80">GitWhisper</h1>
+            <h1 className="-mb-1 ml-2 mt-2 text-xl font-bold text-primary/80">
+              GitWhisper
+            </h1>
           )}
         </div>
       </SidebarHeader>

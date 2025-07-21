@@ -30,6 +30,8 @@ export const projectRouter = createTRPCRouter({
     }),
 
   getProjects: protectedProcedure.query(async ({ ctx }) => {
+    console.log("ctx.user: ", ctx.user);
+    if (!ctx.user) throw new Error("User not authenticated");
     return await ctx.db.project.findMany({
       where: {
         userToProjects: {
